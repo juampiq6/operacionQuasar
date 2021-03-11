@@ -30,7 +30,11 @@ func getMessageFromMap(messageMap *map[string]int) string {
 	messageSlice := make([]string, mapLen)
 	// ordenamos los elementos del mapa dentro del slice
 	for k, i := range *messageMap {
-		messageSlice[i] = k
+		if i >= mapLen {
+			messageSlice = append(messageSlice, k)
+		} else {
+			messageSlice[i] = k
+		}
 	}
 	// retornamos las palabras del mensaje unidas por un espacio
 	return strings.Join(messageSlice, " ")
