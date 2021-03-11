@@ -11,10 +11,15 @@ func postTopSecretHandler(c *gin.Context) {
 	// bindea el json de la request con el modelo, si falla devuelve 400
 	err := c.BindJSON(&satellitesInfoArray)
 	if err == nil {
-		response := proccessDeciphers(&satellitesInfoArray.Satellites)
-		c.JSON(200, response)
+		if len(satellitesInfoArray.Satellites) < 3 {
+			c.JSON(404, "Son necesarios por lo menos 3 satelites para determinar la ubicación de la nave")
+		} else {
+
+			response := proccessDeciphers(&satellitesInfoArray.Satellites)
+			c.JSON(200, response)
+		}
 	}
-	// si hay error de logica negocio devolver 404
+
 }
 
 func proccessDeciphers(satellites *[]models.SateliteInfo) models.TopSecretResponse {
