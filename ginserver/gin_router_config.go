@@ -9,7 +9,10 @@ func GinStartServing() {
 	router.POST("/topsecret", postTopSecretHandler)
 	router.POST("/topsecret_split/:name", postTopSecretSplitHandler)
 	router.GET("/topsecret_split/", getTopSecretSplitHandler)
-
-	router.Run(":8080")
+	port := os.Getenv("PORT")
+    	if len(port) == 0 {
+		port = '80'
+    	}
+	router.Run(":"+port)
 
 }
